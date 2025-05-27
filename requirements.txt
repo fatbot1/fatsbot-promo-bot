@@ -1,0 +1,52 @@
+# FatsBot Promo Bot
+
+Telegram bot to promote the FatsBot dice game.
+
+## Commands
+- `/start` shows welcome message
+- `/promo` gives copy-paste promo tools
+
+## How to use
+1. Set your Telegram bot token in `fatsbot_promo_bot.py` (replace `YOUR_TELEGRAM_BOT_TOKEN`).
+2. Install dependencies:  
+   `pip install -r requirements.txt`
+3. Run the bot:  
+   `python fatsbot_promo_bot.py`
+python-telegram-bot==20.3
+import logging
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+
+WELCOME_TEXT = (
+    "🎲 *Welcome to FatsBot Promo Bot!*\n\n"
+    "Use /promo to get promo tools for the FatsBot dice game."
+)
+
+PROMO_TEXT = (
+    "🚀 *FatsBot Dice Game Promo Pack*\n\n"
+    "Copy and share this text or image in your groups to invite friends!\n\n"
+    "🎲 Play FatsBot Dice: [t.me/FatsBot](https://t.me/FatsBot)\n"
+    "#FatsBot #DiceGame"
+)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(WELCOME_TEXT, parse_mode="Markdown")
+
+async def promo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(PROMO_TEXT, parse_mode="Markdown")
+
+def main():
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("promo", promo))
+    app.run_polling()
+
+if __name__ == '__main__':
+    main()
