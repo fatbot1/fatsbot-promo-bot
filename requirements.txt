@@ -1,4 +1,4 @@
-python-telegram-bot==20.3
+requirements.txt
 # FatsBot Promo Bot
 
 Telegram bot to promote the FatsBot dice game.
